@@ -10,16 +10,17 @@ class FileReaderThread(threading.Thread):
         with open(self.file_name, 'r') as file:
             for line in file:
                 print(line.strip())
-                time.sleep(0.1)
+                time.sleep(0.2)
 
 def main():
-    file_names = ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt', 'file5.txt']
+    num_files = 2  # You can adjust the number of files here
+    file_names = [f'sample{i}.txt' for i in range(1, num_files + 1)]
 
-    threads = []
-    for file_name in file_names:
-        thread = FileReaderThread(file_name)
+    threads = [FileReaderThread(file_name) for file_name in file_names]
+
+    for thread in threads:
         thread.start()
-        threads.append(thread)
+
 
     for thread in threads:
         thread.join()

@@ -8,16 +8,17 @@ def read_file(file_name):
             time.sleep(0.1)
 
 def main():
-    file_names = ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt', 'file5.txt']  # Add more file names as needed
+    num_files = 2
+    file_names = [f'sample{i}.txt' for i in range(1, num_files + 1)]
 
-    processes = []
-    for file_name in file_names:
-        process = multiprocessing.Process(target=read_file, args=(file_name,))
+    processes = [multiprocessing.Process(target=read_file, args=(file_name,)) for file_name in file_names]
+
+    for process in processes:
         process.start()
-        processes.append(process)
 
     for process in processes:
         process.join()
 
 if __name__ == "__main__":
     main()
+
